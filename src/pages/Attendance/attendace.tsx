@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchParsedAttendance } from "@/services/collegeService";
-import { errorHandler } from "@/utils/errorHandler";
+// import { errorHandler } from "@/utils/errorHandler";
 import { toast } from "react-toastify";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -16,8 +16,6 @@ interface SubjectData {
   present: number;
   total: number;
 }
-
-const { showError } = errorHandler();
 
 const calculatePercentage = (present: number, total: number) =>
   total > 0 ? Math.round((present / total) * 100) : 0;

@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { getUser } from "@/api/authApi";
 import { ParsedUser, parseUser } from "@/services/authService";
-import { toast } from "react-toastify";
 
 interface AuthContextType {
   user: ParsedUser;
