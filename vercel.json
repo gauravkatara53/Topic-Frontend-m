@@ -10,16 +10,11 @@
     }
   ],
   "routes": [
-    {
-      "handle": "filesystem"
-    },
+    { "handle": "filesystem" },
     {
       "src": "/api/(.*)",
-      "dest": "http://localhost:5002/api/$1"
+      "dest": "https://topic-backend-2rsf.onrender.com/api/$1"
     },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

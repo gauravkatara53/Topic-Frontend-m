@@ -133,7 +133,7 @@ export default function SignupPage() {
                 variant="outline"
                 className="w-full flex items-center justify-center gap-2 mb-4 border-gray-400"
                 onClick={() => {
-                  window.location.href = `${"http://localhost:5002/api/v1"}/auth/google`;
+                  window.location.href = `${"https://topic-backend-2rsf.onrender.com/api/v1"}/auth/google`;
                 }}
               >
                 <FcGoogle className="text-xl" />
