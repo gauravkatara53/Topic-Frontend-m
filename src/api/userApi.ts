@@ -6,6 +6,8 @@ export const loginUser = (data: any) => apiService.post("/auth/login", data);
 // login with google
 
 export const googleAuth = (data: any) => apiService.post("/auth/google", data);
+export const saveTokenGoogle = (data: { token: string }) =>
+  apiService.post("/auth/save-token", data);
 
 // Register
 export const registerUser = (data: any) =>

@@ -1,5 +1,6 @@
 // src/pages/GoogleSuccessPage.tsx
 
+import { saveTokenGoogle } from "@/api/userApi";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -16,26 +17,11 @@ export default function GoogleSuccessPage() {
       return;
     }
 
-    // Optional: save display name for UI
-    localStorage.setItem("userName", name);
+    localStorage.setItem("userName", name); // only a display helper
 
-    // 🔄 Call backend to store token in HttpOnly cookie
-    fetch("https://topic-backend-2rsf.onrender.com/api/v1/auth/save-token", {
-      method: "POST",
-      credentials: "include", // 👈 Required for cookie
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token }),
-    })
-      .then(async (res) => {
-        if (!res.ok) {
-          const err = await res.json();
-          throw new Error(err.message || "Token saving failed");
-        }
-
-        navigate("/"); // ✅ Redirect to home/dashboard
-      })
+    // 🔄 store token in secure, HttpOnly cookie
+    saveTokenGoogle({ token })
+      .then(() => navigate("/"))
       .catch((e) => {
         console.error("Failed to save token:", e);
         setError("Login failed, please try again.");
