@@ -21,7 +21,9 @@ export default function GoogleSuccessPage() {
 
     // 🔄 store token in secure, HttpOnly cookie
     saveTokenGoogle({ token })
-      .then(() => navigate("/"))
+      .then(() => {
+        window.location.href = "/";
+      })
       .catch((e) => {
         console.error("Failed to save token:", e);
         setError("Login failed, please try again.");
