@@ -5,10 +5,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { FcGoogle } from "react-icons/fc";
 import { login } from "@/services/userService";
 import { errorHandler } from "@/utils/errorHandler"; // ✅ Correct utility
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function LoginPage() {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -22,7 +21,7 @@ export default function LoginPage() {
     try {
       const user = await login({ email, password });
       showSuccess(`Welcome, ${user.data.name}`);
-      navigate("/"); // ✅ Redirect after login
+      window.location.href = "/";
     } catch (error) {
       handleError(error);
     } finally {
