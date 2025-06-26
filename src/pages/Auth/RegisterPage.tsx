@@ -6,7 +6,9 @@ import { registerUser } from "@/api/userApi"; // Your API function
 import { useNavigate } from "react-router-dom";
 import { errorHandler } from "@/utils/errorHandler"; // Your error handling file
 import { Link } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
+
+import { GoogleLogin } from "@react-oauth/google";
+import { verifyGoogleToken } from "@/api/userApi";
 export default function SignupPage() {
   const [formData, setFormData] = useState({
     name: "",
@@ -129,7 +131,7 @@ export default function SignupPage() {
               </div>
 
               {/* Google Sign In */}
-              <Button
+              {/* <Button
                 variant="outline"
                 className="w-full flex items-center justify-center gap-2 mb-4 border-gray-400"
                 onClick={() => {
@@ -138,7 +140,21 @@ export default function SignupPage() {
               >
                 <FcGoogle className="text-xl" />
                 Log in with Google
-              </Button>
+              </Button> */}
+              <GoogleLogin
+                onSuccess={async ({ credential }) => {
+                  try {
+                    const res = await verifyGoogleToken({ token: credential! });
+                    console.log("Login Success:", res.data);
+                    // ✅ Hard reload to ensure cookies/session are applied
+                    window.location.replace("/");
+                  } catch (err) {
+                    console.error("Google login failed", err);
+                  }
+                }}
+                onError={() => console.log("Google login failed")}
+                useOneTap
+              />
               {/* Redirect to Login */}
               <p className="text-center text-gray-500 text-sm">
                 Already have an account?{" "}

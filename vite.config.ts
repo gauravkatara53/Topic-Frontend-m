@@ -1,6 +1,12 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import dotenv from "dotenv";
+
+// Load env variables
+dotenv.config();
+
+const API_URL = process.env.VITE_API_URL;
 
 export default defineConfig({
   resolve: {
@@ -11,9 +17,9 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://topic-backend-2rsf.onrender.com", // Your Render backend URL
+        target: API_URL, // ✅ now works
         changeOrigin: true,
-        secure: true, // Ensure HTTPS is used
+        secure: true,
       },
     },
   },

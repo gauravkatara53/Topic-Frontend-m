@@ -2,12 +2,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-// import { FcGoogle } from "react-icons/fc";
 import { login } from "@/services/userService";
-import { errorHandler } from "@/utils/errorHandler"; // ✅ Correct utility
+import { errorHandler } from "@/utils/errorHandler";
 import { Link } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
-
 import { verifyGoogleToken } from "@/api/userApi";
 
 export default function LoginPage() {
@@ -123,7 +121,6 @@ export default function LoginPage() {
                   try {
                     const res = await verifyGoogleToken({ token: credential! });
                     console.log("Login Success:", res.data);
-
                     // ✅ Hard reload to ensure cookies/session are applied
                     window.location.replace("/");
                   } catch (err) {

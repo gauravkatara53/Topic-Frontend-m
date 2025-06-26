@@ -16,8 +16,9 @@ export default function ContactPage() {
     e.preventDefault();
 
     const form = e.currentTarget;
-    const formData = new FormData(form);
 
+    const formData = new FormData(form);
+    console.log(formData);
     fetch("https://api.web3forms.com/submit", {
       method: "POST",
       body: formData,

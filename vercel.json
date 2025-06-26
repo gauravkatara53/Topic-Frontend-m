@@ -13,7 +13,7 @@
     { "handle": "filesystem" },
     {
       "src": "/api/(.*)",
-      "dest": "https://topic-backend-2rsf.onrender.com/api/$1"
+      "dest": "/"
     },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
