@@ -2,33 +2,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 import { login } from "@/services/userService";
 import { errorHandler } from "@/utils/errorHandler"; // ✅ Correct utility
 import { Link } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-
-<GoogleLogin
-  onSuccess={async (response) => {
-    try {
-      const { credential } = response;
-      const res = await axios.post(
-        "https://topic-backend-2rsf.onrender.com/api/v1/auth/google/verify",
-        { token: credential },
-        { withCredentials: true }
-      );
-
-      // You now have the accessToken and user info
-      console.log(res.data);
-    } catch (err) {
-      console.error("Login failed", err);
-    }
-  }}
-  onError={() => {
-    console.log("Login Failed");
-  }}
-/>;
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -128,7 +107,7 @@ export default function LoginPage() {
               </div>
 
               {/* Google Sign In */}
-              <Button
+              {/* <Button
                 variant="outline"
                 className="w-full flex items-center justify-center gap-2 mb-4 border-gray-400"
                 onClick={() => {
@@ -137,7 +116,29 @@ export default function LoginPage() {
               >
                 <FcGoogle className="text-xl" />
                 Log in with Google
-              </Button>
+              </Button> */}
+              <GoogleLogin
+                onSuccess={async (response) => {
+                  try {
+                    const { credential } = response;
+                    const res = await axios.post(
+                      "https://topic-backend-2rsf.onrender.com/api/v1/auth/google/verify",
+                      { token: credential },
+                      { withCredentials: true }
+                    );
+
+                    console.log("Login Success:", res.data);
+                    // Optional: Redirect to home or dashboard
+                    window.location.href = "/";
+                  } catch (err) {
+                    console.error("Login failed", err);
+                  }
+                }}
+                onError={() => {
+                  console.log("Google login failed");
+                }}
+                useOneTap
+              />
 
               {/* Signup Link */}
               <p className="text-center text-gray-500 text-sm">
