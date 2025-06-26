@@ -121,15 +121,19 @@ export default function LoginPage() {
                 onSuccess={async (response) => {
                   try {
                     const { credential } = response;
+
                     const res = await axios.post(
                       "https://topic-backend-2rsf.onrender.com/api/v1/auth/google/verify",
                       { token: credential },
                       { withCredentials: true }
                     );
 
-                    console.log("Login Success:", res.data);
-                    // Optional: Redirect to home or dashboard
-                    window.location.href = "/";
+                    const { token, user } = res.data;
+
+                    // 👇 Redirect to GoogleSuccessPage with token and name in query params
+                    window.location.href = `/GoogleSuccessPage?token=${encodeURIComponent(
+                      token
+                    )}&name=${encodeURIComponent(user.name)}`;
                   } catch (err) {
                     console.error("Login failed", err);
                   }

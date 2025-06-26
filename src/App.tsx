@@ -33,7 +33,7 @@ export default function App() {
         <Route path="/" element={<DashboardPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<SignupPage />} />
-        <Route path="/google-success" element={<GoogleSuccessPage />} />
+        <Route path="/GoogleSuccessPage" element={<GoogleSuccessPage />} />
         {isAttendancePortalConnected ? (
           <Route path="/attendance" element={<AttendancePage />} />
         ) : (
