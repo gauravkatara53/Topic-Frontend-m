@@ -20,7 +20,7 @@ export default function GoogleSuccessPage() {
     localStorage.setItem("userName", name);
 
     // 🔄 Call backend to store token in HttpOnly cookie
-    fetch("https://topic-backend-2rsf.onrender.com/api/auth/save-token", {
+    fetch("https://topic-backend-2rsf.onrender.com/api/v1/auth/save-token", {
       method: "POST",
       credentials: "include", // 👈 Required for cookie
       headers: {
