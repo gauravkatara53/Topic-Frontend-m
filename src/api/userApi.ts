@@ -25,3 +25,10 @@ export const updateAvatar = (formData: FormData) =>
     },
   });
 export const logoutUser = () => apiService.post("/auth/logout", {});
+
+export interface GoogleVerifyPayload {
+  token: string;
+}
+
+export const verifyGoogleToken = (data: GoogleVerifyPayload) =>
+  apiService.post("/auth/google/verify", data);

@@ -8,6 +8,7 @@ import { errorHandler } from "@/utils/errorHandler"; // ✅ Correct utility
 import { Link } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { verifyGoogleToken } from "@/api/userApi";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -118,25 +119,18 @@ export default function LoginPage() {
                 Log in with Google
               </Button> */}
               <GoogleLogin
-                onSuccess={async (response) => {
+                onSuccess={async ({ credential }) => {
                   try {
-                    const { credential } = response;
-                    const res = await axios.post(
-                      "https://topic-backend-2rsf.onrender.com/api/v1/auth/google/verify",
-                      { token: credential },
-                      { withCredentials: true }
-                    );
-
+                    const res = await verifyGoogleToken({ token: credential! });
                     console.log("Login Success:", res.data);
-                    // Optional: Redirect to home or dashboard
-                    window.location.href = "/";
+
+                    // ✅ Hard reload to ensure cookies/session are applied
+                    window.location.replace("/");
                   } catch (err) {
-                    console.error("Login failed", err);
+                    console.error("Google login failed", err);
                   }
                 }}
-                onError={() => {
-                  console.log("Google login failed");
-                }}
+                onError={() => console.log("Google login failed")}
                 useOneTap
               />
 
