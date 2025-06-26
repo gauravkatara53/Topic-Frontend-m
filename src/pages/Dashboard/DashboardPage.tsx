@@ -26,7 +26,7 @@ const DashboardPage: React.FC = () => {
         }}
       >
         {/* Hero Text */}
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-4">
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
           Discover. Learn. Enjoy.
         </h1>
         <p className="text-xl md:text-2xl font-semibold mb-8">
@@ -68,7 +68,7 @@ const DashboardPage: React.FC = () => {
         </div>
 
         {/* News & Calendar Grid (Inside Hero Section) */}
-        <div className="max-w-screen-xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 px-6">
+        <div className="max-w-screen-xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 px-0">
           <News />
           <AcademicCalendar />
         </div>
