@@ -7,7 +7,7 @@ import { login } from "@/services/userService";
 import { errorHandler } from "@/utils/errorHandler"; // ✅ Correct utility
 import { Link } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
-import axios from "axios";
+
 import { verifyGoogleToken } from "@/api/userApi";
 
 export default function LoginPage() {
