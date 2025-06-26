@@ -6,6 +6,29 @@ import { FcGoogle } from "react-icons/fc";
 import { login } from "@/services/userService";
 import { errorHandler } from "@/utils/errorHandler"; // ✅ Correct utility
 import { Link } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+
+<GoogleLogin
+  onSuccess={async (response) => {
+    try {
+      const { credential } = response;
+      const res = await axios.post(
+        "https://topic-backend-2rsf.onrender.com/api/v1/auth/google/verify",
+        { token: credential },
+        { withCredentials: true }
+      );
+
+      // You now have the accessToken and user info
+      console.log(res.data);
+    } catch (err) {
+      console.error("Login failed", err);
+    }
+  }}
+  onError={() => {
+    console.log("Login Failed");
+  }}
+/>;
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
