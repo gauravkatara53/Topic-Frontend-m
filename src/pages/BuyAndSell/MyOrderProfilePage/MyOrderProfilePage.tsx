@@ -196,7 +196,22 @@ export default function MyOrderProfile() {
                   <span>₹{product.finalPrice?.toLocaleString()}</span>
                 </>
               ) : (
-                <>₹{product.price?.toLocaleString()}</>
+                <>
+                  {product.finalPrice != null ? (
+                    <div className="flex items-center gap-2">
+                      <span className="line-through text-gray-500 text-sm">
+                        ₹{product.price?.toLocaleString()}
+                      </span>
+                      <span className="text-red-600 font-semibold">
+                        ₹{product.finalPrice?.toLocaleString()}
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="text-black font-medium">
+                      ₹{product.price?.toLocaleString()}
+                    </span>
+                  )}
+                </>
               )}
             </div>
 

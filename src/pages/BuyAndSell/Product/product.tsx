@@ -29,13 +29,13 @@ export default function ProductPage() {
   const [currentImg, setCurrentImg] = useState<string | null>(null);
   const [reserved, setReserved] = useState(false);
   const [showQR, setShowQR] = useState(false);
-  const [utr, setUtr] = useState("");
+
   const [mTimeLeft, setMTimeLeft] = useState(24);
   const [timeLeft, setTimeLeft] = useState(120);
   const [paymentFailed, setPaymentFailed] = useState(false);
   const [isReserving, setIsReserving] = useState(false);
   const { isLoggedIn } = user;
-
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   useEffect(() => {
     if (!id) return;
 
@@ -310,9 +310,7 @@ export default function ProductPage() {
                   <Button
                     className="w-full bg-violet-600 hover:bg-violet-700 text-white"
                     onClick={() => {
-                      setShowQR(true);
-                      setTimeLeft(120);
-                      setPaymentFailed(false);
+                      setShowConfirmModal(true); // trigger the modal
                     }}
                   >
                     Pay Now
@@ -345,30 +343,10 @@ export default function ProductPage() {
                   Expires in {timeLeft} sec
                 </Badge>
 
-                {paymentFailed ? (
+                {paymentFailed && (
                   <p className="text-red-600 text-sm mt-2">
                     ❌ Payment failed or timed out
                   </p>
-                ) : (
-                  <div className="space-y-2 mt-4">
-                    <input
-                      type="text"
-                      placeholder="Enter UTR / Transaction ID"
-                      disabled={timeLeft === 0}
-                      className="w-full px-3 py-2 rounded-md border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500"
-                      value={utr}
-                      onChange={(e) => setUtr(e.target.value)}
-                    />
-                    <Button
-                      disabled={timeLeft === 0 || !utr.trim()}
-                      className="w-full bg-green-600 hover:bg-green-700 text-white"
-                      onClick={() => {
-                        alert("Transaction ID submitted!");
-                      }}
-                    >
-                      Submit UTR
-                    </Button>
-                  </div>
                 )}
               </div>
             )}
@@ -382,6 +360,36 @@ export default function ProductPage() {
 
         <ReviewSection />
       </main>
+      {showConfirmModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-xl">
+            <h2 className="text-lg font-semibold mb-4">Confirm with Seller</h2>
+            <p className="text-gray-700 mb-6">
+              Has the seller confirmed that you can proceed with the payment?
+            </p>
+            <div className="flex justify-end gap-3">
+              <Button
+                variant="outline"
+                onClick={() => setShowConfirmModal(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="bg-green-600 text-white hover:bg-green-700"
+                onClick={() => {
+                  setShowConfirmModal(false);
+                  setShowQR(true);
+                  setTimeLeft(120);
+                  setPaymentFailed(false);
+                }}
+              >
+                Yes, Proceed to Pay
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footerd />
     </>
   );

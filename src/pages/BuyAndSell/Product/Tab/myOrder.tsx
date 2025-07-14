@@ -17,6 +17,7 @@ interface Listing {
   status: "sold" | "reserved" | string;
   soldAt?: string;
   reservedAt?: string;
+  finalPrice?: string;
 }
 
 export default function MyOrdersTab() {
@@ -217,7 +218,7 @@ export default function MyOrdersTab() {
           {/* Order List */}
 
           {orders.map((order) => {
-            const isPaid = Boolean(order.soldAt || order.reservedAt);
+            const isPaid = order.finalPrice !== null;
             return (
               <Link to={`/buy-sell/my/order/${order.id}`} key={order.id}>
                 {/* Mobile View */}
@@ -282,8 +283,9 @@ export default function MyOrdersTab() {
                     </div>
                   </div>
                   <div className="col-span-2 font-semibold text-indigo-700">
-                    ₹{order.price.toLocaleString()}
+                    ₹{(order.finalPrice ?? order.price).toLocaleString()}
                   </div>
+
                   <div className="col-span-2">
                     <span
                       className={`px-2 py-1 rounded-full text-xs font-semibold capitalize ${

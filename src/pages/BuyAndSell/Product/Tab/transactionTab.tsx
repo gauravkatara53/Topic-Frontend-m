@@ -21,7 +21,7 @@ interface Transaction {
   debit: boolean;
 }
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 10;
 
 export default function TransactionsTab() {
   const { user } = useAuth();
