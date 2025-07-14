@@ -22,7 +22,7 @@ export default function LoginPage() {
     try {
       const user = await login({ email, password });
       showSuccess(`Welcome, ${user.data.name}`);
-      window.location.href = "/";
+      window.location.href = "/dashboard";
     } catch (error) {
       handleError(error);
     } finally {

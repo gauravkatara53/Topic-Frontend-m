@@ -1,18 +1,15 @@
-import React from "react";
-import { cn } from "@/lib/utils"; // If you're using clsx/twMerge
+import { cn } from "@/lib/utils"
 
-interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-const Skeleton = ({ className, ...props }: SkeletonProps) => {
+function Skeleton({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn(
-        "animate-pulse rounded-md bg-gray-200 dark:bg-gray-300",
-        className
-      )}
+      className={cn("animate-pulse rounded-md bg-primary/10", className)}
       {...props}
     />
-  );
-};
+  )
+}
 
-export { Skeleton };
+export { Skeleton }

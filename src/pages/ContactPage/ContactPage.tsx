@@ -12,29 +12,41 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
 
   // When form is submitted, show success message and toast
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const form = e.currentTarget;
-
     const formData = new FormData(form);
-    console.log(formData);
-    fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          setSubmitted(true);
-          toast.success("✅ Message sent successfully!");
-          form.reset();
-        } else {
-          toast.error("❌ Something went wrong. Try again.");
-        }
-      })
-      .catch(() => {
-        toast.error("❌ Network error. Please try again.");
+    const dataObj = Object.fromEntries(formData.entries());
+
+    console.log("📤 Submitting form with data:", dataObj);
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(dataObj),
       });
+
+      console.log("📥 Raw response object:", res); // status, ok, etc.
+
+      const data = await res.json();
+      console.log("📦 Parsed JSON response:", data); // <-- most important
+
+      if (data.success) {
+        setSubmitted(true);
+        toast.success("✅ Message sent successfully!");
+        form.reset();
+      } else {
+        console.error("❌ API error:", data.message);
+        toast.error(`❌ ${data.message || "Something went wrong."}`);
+      }
+    } catch (err) {
+      console.error("🚨 Network or CORS error:", err);
+      toast.error("❌ Network error. Please try again.");
+    }
   };
 
   return (

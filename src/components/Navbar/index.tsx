@@ -33,10 +33,11 @@ const Navbar: React.FC = () => {
         {/* Middle: Nav Links (desktop) - absolutely centered */}
         <div className="-ml-20 hidden md:flex space-x-6 absolute left-1/2 transform -translate-x-1/2">
           {[
-            { path: "/", label: "Dashboard" },
+            { path: "/dashboard", label: "Dashboard" },
             { path: "/academic", label: "Academic" },
             { path: "/attendance", label: "Attendance" },
             { path: "/upload", label: "Upload" },
+            { path: "/buy-sell", label: "Buy&Sell" },
             { path: "/contact", label: "Contact us" },
           ].map(({ path, label }) => (
             <Link
@@ -45,7 +46,7 @@ const Navbar: React.FC = () => {
               onClick={closeMenu}
               className={`relative px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-300
         ${
-          location.pathname === path
+          location.pathname.startsWith(path)
             ? "bg-white text-blue-600 shadow-sm ring-1 ring-blue-500"
             : "text-gray-600 hover:text-blue-600 hover:bg-gray-100 hover:shadow-md hover:scale-105"
         }`}
@@ -127,10 +128,10 @@ const Navbar: React.FC = () => {
               </li>
             )}
             {[
-              { path: "/", label: "Dashboard" },
+              { path: "/dashboard", label: "Dashboard" },
               { path: "/academic", label: "Academic" },
               { path: "/attendance", label: "Attendance" },
-              { path: "/courses", label: "Courses" },
+              { path: "/buy-sell", label: "Buy&Sell" },
               { path: "/contact", label: "Contact us" },
             ].map(({ path, label }) => (
               <li key={path}>

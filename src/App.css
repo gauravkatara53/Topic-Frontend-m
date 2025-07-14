@@ -91,3 +91,6 @@ body,
 .animate-slideUp {
   animation: slideUp 0.8s ease-in-out;
 }
+.scroll-pl-4 {
+  scroll-padding-left: 1rem;
+}

@@ -20,6 +20,12 @@ import AcademicPage from "./pages/AcademicPage/AcademicPage";
 import ContactPage from "./pages/ContactPage/ContactPage";
 import MyNotesSearchPage from "./pages/Notes/myNotes";
 import MyPYQ from "./pages/PYQ/myPyq";
+import BuySellPage from "./pages/BuyAndSell/BuySellPage";
+import ProductPage from "./pages/BuyAndSell/Product/product";
+import CreateListingPage from "./pages/BuyAndSell/Product/createPage";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
+import SellerProductDetail from "./pages/BuyAndSell/Seller/SellerProductDetail";
+import MyOrderProfile from "./pages/BuyAndSell/MyOrderProfilePage/MyOrderProfilePage";
 
 export default function App() {
   const { user } = useAuth();
@@ -28,61 +34,80 @@ export default function App() {
 
   console.log(isAttendancePortalConnected);
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<DashboardPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<SignupPage />} />
-        <Route path="/GoogleSuccessPage" element={<GoogleSuccessPage />} />
-        {isAttendancePortalConnected ? (
-          <Route path="/attendance" element={<AttendancePage />} />
-        ) : (
-          <Route path="/attendance" element={<AttendancePage2 />} />
-        )}
+    <TooltipProvider>
+      <Router>
+        <Routes>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<SignupPage />} />
+          <Route path="/GoogleSuccessPage" element={<GoogleSuccessPage />} />
+          {isAttendancePortalConnected ? (
+            <Route path="/attendance" element={<AttendancePage />} />
+          ) : (
+            <Route path="/attendance" element={<AttendancePage2 />} />
+          )}
 
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/get/notes" element={<NotesSearchPage />} />
-        {isUploaderVerified ? (
-          <Route path="/upload/notes" element={<UploadNotePage />} />
-        ) : (
-          <Route path="/upload/notes" element={<BecomeUploaderPage />} />
-        )}
-        {isUploaderVerified ? (
-          <Route path="/upload/pyq" element={<UploadPYQPage />} />
-        ) : (
-          <Route path="/upload/pyq" element={<BecomeUploaderPage />} />
-        )}
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/get/notes" element={<NotesSearchPage />} />
+          {isUploaderVerified ? (
+            <Route path="/upload/notes" element={<UploadNotePage />} />
+          ) : (
+            <Route path="/upload/notes" element={<BecomeUploaderPage />} />
+          )}
+          {isUploaderVerified ? (
+            <Route path="/upload/pyq" element={<UploadPYQPage />} />
+          ) : (
+            <Route path="/upload/pyq" element={<BecomeUploaderPage />} />
+          )}
 
-        <Route path="/get/pyq" element={<GetPYQPage />} />
-        <Route
-          path="/verify/become/uploader"
-          element={<VerifyUploaderPage />}
-        />
-        {isUploaderVerified && (
+          <Route path="/get/pyq" element={<GetPYQPage />} />
           <Route
             path="/verify/become/uploader"
             element={<VerifyUploaderPage />}
           />
-        )}
+          {isUploaderVerified && (
+            <Route
+              path="/verify/become/uploader"
+              element={<VerifyUploaderPage />}
+            />
+          )}
 
-        {isUploaderVerified ? (
-          <Route path="/my/notes" element={<MyNotesSearchPage />} />
-        ) : (
-          <Route path="/my/notes" element={<BecomeUploaderPage />} />
-        )}
+          {isUploaderVerified ? (
+            <Route path="/my/notes" element={<MyNotesSearchPage />} />
+          ) : (
+            <Route path="/my/notes" element={<BecomeUploaderPage />} />
+          )}
 
-        {isUploaderVerified ? (
-          <Route path="/my/pyqs" element={<MyPYQ />} />
-        ) : (
-          <Route path="/my/pyqs" element={<BecomeUploaderPage />} />
-        )}
+          {isUploaderVerified ? (
+            <Route path="/my/pyqs" element={<MyPYQ />} />
+          ) : (
+            <Route path="/my/pyqs" element={<BecomeUploaderPage />} />
+          )}
 
-        <Route path="/academic" element={<AcademicPage />} />
-        <Route path="/upload" element={<BecomeUploaderPage />} />
-        <Route path="/1" element={<ProfileHeader />} />
-        <Route path="/contact" element={<ContactPage />} />
-      </Routes>
-      <ToastContainer />
-    </Router>
+          <Route path="/academic" element={<AcademicPage />} />
+
+          {/* buy and sell */}
+
+          <Route path="/buy-sell/:tab?" element={<BuySellPage />} />
+          <Route path="/buy-sell/product/:id" element={<ProductPage />} />
+          <Route path="/buy-sell/my/order/:id" element={<MyOrderProfile />} />
+          <Route
+            path="/buy-sell/create/product"
+            element={<CreateListingPage />}
+          />
+          <Route
+            path="/buy-sell/seller/product/:id"
+            element={<SellerProductDetail />}
+          />
+
+          {/* buy and sell */}
+
+          <Route path="/upload" element={<BecomeUploaderPage />} />
+          <Route path="/1" element={<ProfileHeader />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Routes>
+        <ToastContainer />
+      </Router>
+    </TooltipProvider>
   );
 }
