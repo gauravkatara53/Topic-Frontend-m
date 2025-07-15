@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { CircleGauge, UsersRound, BookOpen } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import SkeletonCard from "./Components/skeltonloading"; // ✅ Add this at the top
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 interface SubjectData {
   name: string;
@@ -105,8 +106,19 @@ const AttendancePage = () => {
             ))}
           </div>
         ) : subjects.length === 0 ? (
-          <div className="text-center text-gray-500 text-lg font-medium py-10">
-            No Records Found !!!
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "100px",
+            }}
+          >
+            <DotLottieReact
+              src="https://lottie.host/772dea80-fbe2-4d27-9d82-f461138c03fd/m50ie5Po8j.lottie"
+              style={{ width: 300, height: 300 }}
+              autoplay
+              loop
+            />
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
