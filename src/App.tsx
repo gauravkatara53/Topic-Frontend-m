@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import LoginPage from "./pages/Auth/LoginPage";
 import SignupPage from "./pages/Auth/RegisterPage";
 import GoogleSuccessPage from "./pages/GoogleSuccessPage";
@@ -37,6 +42,7 @@ export default function App() {
     <TooltipProvider>
       <Router>
         <Routes>
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<SignupPage />} />
