@@ -11,7 +11,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://topic-backend-2rsf.onrender.com", // ✅ now works
+        target: "http://localhost:5002", // ✅ now works
         changeOrigin: true,
         secure: true,
       },

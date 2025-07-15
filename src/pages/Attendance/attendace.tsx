@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchParsedAttendance } from "@/services/collegeService";
-// import { errorHandler } from "@/utils/errorHandler";
+import { errorHandler } from "@/utils/errorHandler";
 import { toast } from "react-toastify";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -59,10 +59,15 @@ const AttendancePage = () => {
     const load = async () => {
       const loadingToast = toast.loading("Fetching attendance...");
       setLoading(true);
-      const data = await fetchParsedAttendance();
-      setSubjects(data);
-      setLoading(false);
-      toast.dismiss(loadingToast);
+      try {
+        const data = await fetchParsedAttendance();
+        setSubjects(data);
+      } catch (error) {
+        errorHandler().handleError(error); // ← Use your utility here
+      } finally {
+        setLoading(false);
+        toast.dismiss(loadingToast);
+      }
     };
 
     load();
@@ -98,6 +103,10 @@ const AttendancePage = () => {
             {Array.from({ length: 6 }).map((_, i) => (
               <SkeletonCard key={i} />
             ))}
+          </div>
+        ) : subjects.length === 0 ? (
+          <div className="text-center text-gray-500 text-lg font-medium py-10">
+            No Records Found !!!
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

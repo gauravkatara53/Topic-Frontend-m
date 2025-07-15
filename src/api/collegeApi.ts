@@ -27,8 +27,8 @@ export const fillAttendanceDetail = (
   return apiService.post("/college/fill/college", data);
 };
 
-export const getAttendanceData = (data: any) =>
-  apiService.post("/college/get/attendance/data", data);
+export const getAttendanceData = () =>
+  apiService.post("/college/get/attendance/data");
 
 export const getOTP = (data: { email: string }) =>
   apiService.post("/otp/send-otp", data);

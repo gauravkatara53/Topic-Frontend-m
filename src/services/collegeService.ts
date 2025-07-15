@@ -43,11 +43,25 @@ export const submitCollegeCredentials = async (data: {
 // ✅ Parse attendance data
 export const fetchParsedAttendance = async (): Promise<SubjectData[]> => {
   try {
-    const res = await getAttendanceData({});
-    if (!res.data.success || !res.data.data || !Array.isArray(res.data.data))
-      return [];
+    const res = await getAttendanceData();
+    const data = res.data?.data;
 
-    const rows = res.data.data.slice(1); // skip header
+    console.log("Attendance API response:", res.data); // ✅ LOG full response
+
+    // Check if data is an array and first row is ["No Records Found !!!"]
+    if (
+      !res.data.success ||
+      !Array.isArray(data) ||
+      data.length === 0 ||
+      (data.length === 1 &&
+        data[0].length === 1 &&
+        data[0][0] === "No Records Found !!!")
+    ) {
+      console.warn("No attendance records found."); // ✅ LOG
+      return [];
+    }
+
+    const rows = data.slice(1); // Skip the header
 
     const subjects: SubjectData[] = rows.map((row: string[]) => {
       const [_, code, name, faculty, presentTotal] = row;
@@ -56,8 +70,13 @@ export const fetchParsedAttendance = async (): Promise<SubjectData[]> => {
     });
 
     return subjects;
-  } catch (err) {
-    handleError(err);
+  } catch (err: any) {
+    console.error("❌ Error fetching attendance:");
+    console.error("🔸 Axios error:", err);
+    console.error("🔸 Error response:", err.response);
+    console.error("🔸 Status:", err.response?.status);
+    console.error("🔸 Data:", err.response?.data);
+    handleError(err); // toast or logger
     return [];
   }
 };
